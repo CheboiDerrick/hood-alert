@@ -1,26 +1,41 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
+
+
+# Project models
+
 class Neighborhood(models.Model):
+    '''
+    Model that describes the behaviors of thr Neighborhood object
+    '''
     name = models.CharField(max_length=70)
     location = models.CharField(max_length=70)
-    occupant_count=models.IntegerField()
+    occupant_count = models.IntegerField()
 
+    # create neighborhood
     def create_neigborhood(self):
         self.save()
 
+    # delete neighborhood
+
     def delete_neigborhood(self):
         self.delete()
-    
-    @classmethod
-    def find_neigborhood(cls,neigborhood_id):
-        neighborhood=cls.objects.filter(pk=neigborhood_id)
-        return neighborhood
+
+    # find a neighborhood
 
     @classmethod
-    def update_neighborhood(cls,id):
+    def find_neigborhood(cls, neigborhood_id):
+        neighborhood = cls.objects.filter(pk=neigborhood_id)
+        return neighborhood
+
+    # update a neighborhood
+
+    @classmethod
+    def update_neighborhood(cls, id):
         cls.objects.filter(pk=id).update()
+
+    # find a neighborhood occupants
 
     def update_occupants():
         pass
@@ -30,9 +45,14 @@ class Neighborhood(models.Model):
 
 
 class Profile(models.Model):
-    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    '''
+    Model that describes the behaviors of the User Profile object
+    '''
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    photo = models.ImageField(upload_to='posts/', blank=True, null=True)
     name = models.CharField(max_length=100)
-    neighborhood= models.OneToOneField(Neighborhood, on_delete=models.CASCADE)
+    neighborhood = models.OneToOneField(Neighborhood, on_delete=models.CASCADE)
     email = models.EmailField(unique=True)
 
     def __str__(self):
@@ -40,10 +60,14 @@ class Profile(models.Model):
 
 
 class Business(models.Model):
-    name=models.CharField(max_length=100)
-    user=models.ForeignKey(User, on_delete=models.CASCADE)
-    neighborhood=models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
-    email=models.EmailField(unique=True)
+    '''
+    Model that describes the behaviors of the Business object
+    '''
+
+    name = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    neighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
+    email = models.EmailField(unique=True)
 
     def create_business(self):
         self.save()
@@ -52,8 +76,8 @@ class Business(models.Model):
         self.delete()
 
     @classmethod
-    def find_business(cls,business_id):
-        business=cls.objects.filter(id=business_id)
+    def find_business(cls, business_id):
+        business = cls.objects.filter(id=business_id)
         return business
 
     @classmethod
@@ -61,24 +85,26 @@ class Business(models.Model):
         cls.objects.filter(id=id).update()
 
     @classmethod
-    def search_business(cls,searchterm):
-        businesses=cls.objects.filter(name__icontains=searchterm)
+    def search_business(cls, searchterm):
+        businesses = cls.objects.filter(name__icontains=searchterm)
         return businesses
-
 
     def __str__(self):
         return self.name
 
-class Post(models.Model):
-    title=models.CharField(max_length=100)
-    detail=models.TextField()
-    # image=CloudinaryField('image', blank=True, null=True)
-    image=models.ImageField(upload_to='posts/', blank=True, null=True)
-    user=models.ForeignKey(User, on_delete=models.CASCADE)
-    neighborhood=models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
-    posted_on=models.DateTimeField()
 
-        # create post
+class Post(models.Model):
+    '''
+    Model that describes the behaviors of the Post object
+    '''
+    title = models.CharField(max_length=100)
+    detail = models.TextField()
+    image = models.ImageField(upload_to='posts/', blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    neighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
+    posted_on = models.DateTimeField()
+
+    # create post
     def create_post(self):
         self.save()
 
@@ -90,7 +116,36 @@ class Post(models.Model):
     def update_post(self):
         self.update()
 
-
     def __str__(self):
         return self.title
 
+
+class Contacts(models.Model):
+    '''
+    Model that describes the behaviors of thr Contact object
+    '''
+    name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=50)
+    neighborhood = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    # create contact
+
+    def create_contact(self):
+        self.save()
+
+    # delete contact
+    def delete_contact(self):
+        self.delete()
+
+    # update contact
+    def update_contact(self):
+        self.update()
+
+    # find contact by id
+    @classmethod
+    def find_contact(cls, id):
+        contact = cls.objects.get(id=id)
+        return contact
+
+    def __str__(self):
+        return self.name

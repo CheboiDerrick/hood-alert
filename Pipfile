@@ -5,6 +5,10 @@ name = "pypi"
 
 [packages]
 django = "*"
+django-cloudinary-storage = "*"
+pillow = "*"
+cloudinary = "*"
+django-bootstrap5 = "*"
 
 [dev-packages]
 
