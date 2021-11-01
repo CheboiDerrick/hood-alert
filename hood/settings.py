@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django_registration',
     'cloudinary_storage',
     'cloudinary',
-    'bootstrap5',
+    'django_bootstrap5',
     'mainapp'
 ]
 
