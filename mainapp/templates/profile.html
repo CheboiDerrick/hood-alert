@@ -1,3 +1,11 @@
+{% extends "base.html" %}
+{%load static%}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
 <div class="container">
     <div id="content" class="content p-0">
         <div class="profile-header">
@@ -13,10 +21,10 @@
                 </div>
 
                 <div class="profile-header-info">
-                    <h4 class="m-t-sm"> {{profile.name}} </h4>
-                    <p class="m-b-sm">{{profile.user.username}}</p>
-                    <button data-bs-toggle="modal" data-bs-target="#profileModal"
-                        class="btn btn-xs btn-info mb-4 modal fade">Edit Profile</button>
+                    <h4 class="m-t-sm"> {{profile.name}} KKKK</h4>
+                    <p class="m-b-sm">{{profile.user.username}}KKKKK</p>
+                    <button type="button" class="btn btn-outline-primary m-3 text-white" data-bs-toggle="modal"
+                        data-bs-target="#profileModal">Edit Profile</button>
                 </div>
             </div>
 
@@ -307,4 +315,5 @@
             </div>
         </div>
     </div>
-</div>    
+</div>
+{%endblock%}

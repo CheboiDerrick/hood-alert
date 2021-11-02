@@ -85,3 +85,162 @@ def update_profile(request):
         # return render(request, 'profile.html', {'success': 'Profile Updated Successfully'})
     else:
         return render(request, "profile.html", {"danger": "Profile Update Failed"})
+
+
+    # create post
+@login_required(login_url="/accounts/login/")
+def create_post(request):
+    if request.method == "POST":
+        current_user = request.user
+        title = request.POST["title"]
+        content = request.POST["content"]
+        # neighbourhood = request.POST["neighbourhood"]
+
+        # get current user neighbourhood
+        profile = Profile.objects.filter(user_id=current_user.id).first()
+        # check if user has neighbourhood
+        if profile is None:
+            profile = Profile.objects.filter(
+                user_id=current_user.id).first()  # get profile
+            posts = Post.objects.filter(user_id=current_user.id)
+            neighbourhood = Neighborhood.objects.all()
+            contacts = Contacts.objects.filter(user_id=current_user.id)
+            businesses=Business.objects.filter(user_id=current_user.id)
+        
+            return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!",  "neighbourhood": neighbourhood, "businesses": businesses, "contacts": contacts, "posts": posts})
+        else:
+            neighbourhood = profile.neighbourhood
+
+        # check if there is a post with image
+        if request.FILES:
+            image = request.FILES["image"]
+            post = Post(
+                user_id=current_user.id,
+                title=title,
+                content=content,
+                image=image,
+                neighbourhood=neighbourhood,
+            )
+            post.create_post()
+
+            return redirect("/profile", {"success": "Post Created Successfully"})
+        else:
+            post = Post(
+                user_id=current_user.id,
+                title=title,
+                content=content,
+                neighbourhood=neighbourhood,
+            )
+            post.create_post()
+            return redirect("/profile", {"success": "Post Created Successfully"})
+
+    else:
+        return render(request, "profile.html", {"danger": "Post Creation Failed"})
+
+# create business
+@login_required(login_url="/accounts/login/")
+def create_business(request):
+    if request.method == "POST":
+        current_user = request.user
+        name = request.POST["name"]
+        email = request.POST["email"]
+        phone = request.POST["phone"]
+
+        # get current user neighbourhood
+        profile = Profile.objects.filter(user_id=current_user.id).first()
+        # check if user has neighbourhood
+        if profile is None:
+            profile = Profile.objects.filter(
+                user_id=current_user.id).first()  # get profile
+            posts = Post.objects.filter(user_id=current_user.id)
+            # get all locations
+            neighbourhood = Neighborhood.objects.all()
+            businesses = Business.objects.filter(user_id=current_user.id)
+            contacts = Contacts.objects.filter(user_id=current_user.id)
+            # redirect to profile with error message
+            return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "neighbourhood": neighbourhood, "businesses": businesses, "contacts": contacts, "posts": posts})
+        else:
+            neighbourhood = profile.neighbourhood
+
+        # check if its an instance of neighbourhood
+        if neighbourhood == "":
+            neighbourhood = None
+        else:
+            neighbourhood = Neighborhood.objects.get(name=neighbourhood)
+
+        business = Business(
+            user_id=current_user.id,
+            name=name,
+            email=email,
+            phone=phone,
+            neighbourhood=neighbourhood,
+        )
+        business.create_business()
+
+        return redirect("/profile", {"success": "Business Created Successfully"})
+    else:
+        return render(request, "profile.html", {"danger": "Business Creation Failed"})
+
+# create contact
+@login_required(login_url="/accounts/login/")
+def create_contact(request):
+    if request.method == "POST":
+        current_user = request.user
+        name = request.POST["name"]
+        phone = request.POST["phone"]
+        
+        profile = Profile.objects.filter(user_id=current_user.id).first()
+        # check if user has neighbourhood
+        if profile is None:
+            profile = Profile.objects.filter(
+                user_id=current_user.id).first()  # get profile
+            posts = Post.objects.filter(user_id=current_user.id)
+            # get all locations
+            neighbourhood = Neighborhood.objects.all()
+            businesses = Business.objects.filter(user_id=current_user.id)
+            contacts = Contacts.objects.filter(user_id=current_user.id)
+            
+            return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "neighbourhood": neighbourhood,"businesses": businesses, "contacts": contacts, "posts": posts})
+        else:
+            neighbourhood = profile.neighbourhood
+
+        # check if its an instance of neighbourhood
+        if neighbourhood == "":
+            neighbourhood = None
+        else:
+            neighbourhood = Neighborhood.objects.get(name=neighbourhood)
+
+        contact = Contacts(
+            user_id=current_user.id,
+            name=name,
+            phone=phone,
+            neighbourhood=neighbourhood,
+        )
+        contact.create_contact()
+
+        return redirect("/profile", {"success": "Contact Created Successfully"})
+    else:
+        return render(request, "profile.html", {"danger": "Contact Creation Failed"})
+
+@login_required(login_url="/accounts/login/")
+# posts page
+def posts(request):
+    current_user = request.user
+    # get current user neighbourhood
+    profile = Profile.objects.filter(user_id=current_user.id).first()
+    # check if user has neighbourhood
+    if profile is None:
+        profile = Profile.objects.filter(
+            user_id=current_user.id).first()  # get profile
+        posts = Post.objects.filter(user_id=current_user.id)
+        # get all locations
+        neighbourhood = Neighborhood.objects.all()
+        businesses = Business.objects.filter(user_id=current_user.id)
+        contacts = Contacts.objects.filter(user_id=current_user.id)
+        # redirect to profile with error message
+        return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "neighbourhood": neighbourhood, "businesses": businesses, "contacts": contacts, "posts": posts})
+    else:
+        neighbourhood = profile.neighbourhood
+        # get all posts in the neighbourhood of the user ordered by date
+        posts = Post.objects.filter(neighbourhood=neighbourhood)
+        return render(request, "posts.html", {"posts": posts})
