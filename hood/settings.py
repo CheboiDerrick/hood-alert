@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 from pathlib import Path
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*mf*4du+&(spu31lt=%p*@4qvcdyem&h@72kw%*^*lv(32x2r)'
+SECRET_KEY = os.environ['SECRET-KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -138,7 +139,7 @@ DEFAULT_FILE_STORAGE='cloudinary_storage.storage.MediaCloudinaryStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#Cloudinary storage set up
-CLOUDINARY_URL='cloudinary://724762381296252:G5s0WOUcxOpkrgpruxDkfbx4AMg@dczkd4szy'
 
 LOGIN_REDIRECT_URL='/'
+
+django_heroku.settings(locals())

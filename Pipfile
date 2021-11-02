@@ -10,6 +10,8 @@ pillow = "*"
 cloudinary = "*"
 django-bootstrap5 = "*"
 django-registration = "*"
+heroku = "*"
+django-heroku = "*"
 
 [dev-packages]
 
