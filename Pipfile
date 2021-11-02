@@ -12,6 +12,7 @@ django-bootstrap5 = "*"
 django-registration = "*"
 heroku = "*"
 django-heroku = "*"
+gunicorn = "*"
 
 [dev-packages]
 
