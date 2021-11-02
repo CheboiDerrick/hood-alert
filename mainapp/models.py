@@ -12,7 +12,7 @@ class Neighborhood(models.Model):
     name = models.CharField(max_length=70)
     location = models.CharField(max_length=70)
     occupant_count = models.IntegerField()
-    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    user=models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
     # create neighborhood
     def create_neigborhood(self):
