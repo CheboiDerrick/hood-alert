@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid background">
+    <div class="row w-75 mx-auto">
+        {% for post in posts %}
+        <div class="card my-4" style="max-width: 100%;">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4> {{post.title}} </h4>
+                <div class="d-flex align-items-center justify-content-center">
+                    <h6>Posted by: {{post.user.username}}</h6>
+                </div>
+            </div>
+            <img src="{{ post.image.url }}" class="img-fluid" alt="Post Image">
+            <div class="card-body">
+                <h6 class="">{{post.detail}} </h6>
+                <div class="d-flex justify-content-between" >
+                    <p class="text-muted">{{post.posted_on | timesince }}</p>
+                    <p class="text-muted">{{post.neighborhood}}</p>
+                </div>
+               
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

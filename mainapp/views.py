@@ -94,8 +94,6 @@ def create_post(request):
         current_user = request.user
         title = request.POST["title"]
         content = request.POST["detail"]
-        # neighbourhood = request.POST["neighbourhood"]
-
         # get current user neighbourhood
         profile = Profile.objects.filter(user_id=current_user.id).first()
         # check if user has neighbourhood
@@ -138,8 +136,6 @@ def create_post(request):
         return render(request, "profile.html", {"danger": "Post Creation Failed"})
 
 # create business
-
-
 @login_required(login_url="/accounts/login/")
 def create_business(request):
     if request.method == "POST":
@@ -178,14 +174,11 @@ def create_business(request):
             neighborhood=neighborhood,
         )
         business.create_business()
-
         return redirect("/profile", {"success": "Business Created Successfully"})
     else:
         return render(request, "profile.html", {"danger": "Business Creation Failed"})
 
 # create contact
-
-
 @login_required(login_url="/accounts/login/")
 def create_contact(request):
     if request.method == "POST":
@@ -257,63 +250,39 @@ def posts(request):
 @login_required(login_url="/accounts/login/")
 def business(request):
     current_user = request.user
-    # get current user neighbourhood
     profile = Profile.objects.filter(user_id=current_user.id).first()
-    # check if user has neighbourhood
     if profile is None:
         profile = Profile.objects.filter(
             user_id=current_user.id).first()  # get profile
         posts = Post.objects.filter(user_id=current_user.id)
         # get all locations
-        neighbourhood = Neighborhood.objects.all()
+        neighborhood = Neighborhood.objects.all()
         businesses = Business.objects.filter(user_id=current_user.id)
         contacts = Contacts.objects.filter(user_id=current_user.id)
-        # redirect to profile with error message
-        return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "neighbourhood": neighbourhood, "businesses": businesses, "contacts": contacts, "posts": posts})
+        return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "neighbourhood": neighborhood, "businesses": businesses, "contacts": contacts, "posts": posts})
     else:
-        neighbourhood = profile.neighbourhood
-        # get all businesses in the user neighbourhood
+        neighborhood = profile.neighborhood
         businesses = Business.objects.filter(
-            neighbourhood=profile.neighbourhood)
-        return render(request, "business.html", {"businesses": businesses})
+            neighborhood=profile.neighborhood)
+        return render(request, "business.html", {"businesses": businesses, "neighborhood":neighborhood})
 
 
 # contact page
 @login_required(login_url="/accounts/login/")
 def contacts(request):
     current_user = request.user
-    # get current user neighbourhood
     profile = Profile.objects.filter(user_id=current_user.id).first()
-    # check if user has neighbourhood
     if profile is None:
         profile = Profile.objects.filter(
-            user_id=current_user.id).first()  # get profile
+            user_id=current_user.id).first()
         posts = Post.objects.filter(user_id=current_user.id)
-        # get all locations
         neighbourhood = Neighborhood.objects.all()
         businesses = Business.objects.filter(user_id=current_user.id)
         contacts = Contacts.objects.filter(user_id=current_user.id)
-        # redirect to profile with error message
         return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "neighbourhood": neighbourhood, "businesses": businesses, "contacts": contacts, "posts": posts})
     else:
         neighbourhood = profile.neighbourhood
-        # get all contacts where the neighbourhood is the same as the user neighbourhood
         contacts = Contacts.objects.filter(
             neighbourhood=profile.neighbourhood).order_by("-created_at")
         return render(request, "contacts.html", {"contacts": contacts, "neighbourhood": profile.neighbourhood})
 
-# search
-
-
-@login_required(login_url="/accounts/login/")
-def search(request):
-    if 'search_term' in request.GET and request.GET["search_term"]:
-        search_term = request.GET.get("search_term")
-        searched_businesses = Business.objects.filter(
-            name__icontains=search_term)
-        message = f"Search For: {search_term}"
-
-        return render(request, "search.html", {"message": message, "businesses": searched_businesses})
-    else:
-        message = "You haven't searched for any term"
-        return render(request, "search.html", {"message": message})

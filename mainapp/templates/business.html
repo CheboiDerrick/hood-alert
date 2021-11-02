@@ -1,0 +1,45 @@
+
+  
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .card-img-top {
+        width: 100%;
+        height: 15vw !important;
+        object-fit: cover;
+        /* Do not scale the image */
+    }
+
+</style>
+<!-- blogs -->
+<section class="blog-section" id="posts">
+    <div class="container mt-5">
+        <div class="row mt-4">
+            <h2 class="text-center mb-5 headings">Businesses in: {{neighborhood}}<br>
+            </h2>
+            {% for business in businesses %}
+            <div class="col-md-4 col-lg-3 col-sm-12">
+                <div class="card" >
+                    <div class="card-body">
+                        <h5 class="card-title text-capitalize">{{ business.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Owner: <span class="badge rounded-pill bg-info text-white">{{ business.user.username }}</span></h6>
+                        <p class="card-text">{{ business.description}}</p>
+                        <a href="mailto:{{ business.email }}" class="card-link">Email: <span class="text-bold text-primary">{{ business.email }}</span> </a>
+                       <br>
+                    </div>
+                  </div>
+            </div>
+            {% empty %}
+            <div class="col-md-12">
+                <div class="card mb-4 post-card">
+                    <div class="card-body text-center">
+                        <h6 class="fade-item mb-2 text-danger">No businesses found within your Neighborhood!!</h6>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+{% endblock %}
