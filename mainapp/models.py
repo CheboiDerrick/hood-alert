@@ -12,6 +12,7 @@ class Neighborhood(models.Model):
     name = models.CharField(max_length=70)
     location = models.CharField(max_length=70)
     occupant_count = models.IntegerField()
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
 
     # create neighborhood
     def create_neigborhood(self):
@@ -65,9 +66,12 @@ class Business(models.Model):
     '''
 
     name = models.CharField(max_length=100)
+    description = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     neighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, null=True, blank=True )
+    phone= models.CharField(max_length=50, null=True, blank=True)
+
 
     def create_business(self):
         self.save()
@@ -104,6 +108,10 @@ class Post(models.Model):
     neighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
     posted_on = models.DateTimeField()
 
+
+    class Meta:
+        ordering=['-posted_on']
+
     # create post
     def create_post(self):
         self.save()
@@ -127,6 +135,7 @@ class Contacts(models.Model):
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=50)
     neighborhood = models.ForeignKey(User, on_delete=models.CASCADE)
+    user=models.ForeignKey(User, on_delete=models.CASCADE, related_name='users',default=1)
 
     # create contact
 

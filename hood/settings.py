@@ -134,4 +134,7 @@ DEFAULT_FILE_STORAGE='cloudinary_storage.storage.MediaCloudinaryStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#Cloudinary storage set up
 CLOUDINARY_URL='cloudinary://724762381296252:G5s0WOUcxOpkrgpruxDkfbx4AMg@dczkd4szy'
+
+LOGIN_REDIRECT_URL='/'

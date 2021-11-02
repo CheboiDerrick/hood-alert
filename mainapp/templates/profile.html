@@ -1,0 +1,310 @@
+<div class="container">
+    <div id="content" class="content p-0">
+        <div class="profile-header">
+            <div class="profile-header-cover"></div>
+
+            <div class="profile-header-content">
+                <div class="profile-header-img">
+                    {% if profile.photo %}
+                    <img src="{{profile.photo.url}}" alt="" class="card-img-top">
+                    {%else%}
+                    <i class="far fa-user"></i>
+                    {% endif %}
+                </div>
+
+                <div class="profile-header-info">
+                    <h4 class="m-t-sm"> {{profile.name}} </h4>
+                    <p class="m-b-sm">{{profile.user.username}}</p>
+                    <button data-bs-toggle="modal" data-bs-target="#profileModal"
+                        class="btn btn-xs btn-info mb-4 modal fade">Edit Profile</button>
+                </div>
+            </div>
+
+            <ul class="profile-header-tab nav nav-tabs">
+                <li class="nav-item"><a href="#profile-posts" class="nav-link active show" data-toggle="tab">POSTS</a>
+                </li>
+                <li class="nav-item"><a href="#profile-business" class="nav-link" data-toggle="tab">BUSINESSES</a></li>
+                <li class="nav-item"><a href="#profile-contacts" class="nav-link" data-toggle="tab">CONTACTS</a></li>
+                </li>
+            </ul>
+        </div>
+
+        <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="profileModalLabel">Edit Profile</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'update_profile' %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="name">Name</label>
+                                        <input type="text" class="form-control" id="first_name" name="first_name"
+                                            value="{{ profile.name }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="username">Username</label>
+                                        <input type="text" class="form-control" id="username" name="username"
+                                            value="{{ user.username }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="neighborhood">Neighbourhood</label>
+                                        <select name="neighbourhood" id="neighbourhood" class="form-control" required>
+                                            <option value="">Select Neighbourhood</option>
+                                            {% for neighbourhood in neighbourhood %}
+                                            <option value="{{ neighbourhood.name }}">
+                                                {{neighbourhood.name }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email"
+                                            value="{{ profile.email}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="profile_pic">Profile Photo</label>
+                                <input type="file" class="form-control" id="profile_pic" name="profile_pic" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn">Update Profile</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- posts -->
+        <div class="profile-container">
+            <div class="row row-space-20">
+                <div class="col-md-8">
+                    <div class="tab-content p-0">
+                        <div class="tab-pane active show" id="profile-posts">
+                            <div class="m-b-10"><b>Posts ({{posts.count}})</b></div>
+                            <div class="row row-space-2">
+                                {for post in posts}
+                                <div class="col-sm-8">
+                                    {% if post.image %}
+                                    <h2> {{post.title}} </h2>
+                                    <img src="{{ post.image.url }}" class="border-radius-around" alt="Image">
+                                    {% else %}
+                                    <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG"
+                                        class="border-radius-around" alt="Image">
+                                    {% endif %}
+                                    <p> {{post.detail}} </p>
+                                    <div class="d-flex justify-content-between">
+                                        <p> {{post.user.username}} </p>
+                                        <p> {{post.neighborhood.name}} </p>
+                                        <p> {{post.posted_on | date}} </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-lg m-3" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                                    <i class="fa fa-plus text-white"></i> Add Post
+                                </button>
+                                <!-- modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Add Post</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{% url 'save_post' %}" method="post"
+                                                    enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <div class="form-group mb-3">
+                                                        <label for="title">Title</label>
+                                                        <input type="text" class="form-control" value="" name="title"
+                                                            required>
+                                                    </div>
+                                                    <div class="form-group mt-3">
+                                                        <label for="exampleFormControlFile1">Photo</label>
+                                                        <input type="file" class="form-control"
+                                                            id="exampleFormControlFile1" name="image">
+                                                    </div>
+                                                    <div class="form-group mt-3">
+                                                        <label for="exampleFormControlTextarea1">Detail</label>
+                                                        <textarea class="form-control" id="exampleFormControlTextarea1"
+                                                            rows="5" name="detail" required></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn">Post</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-container">
+            <div class="row row-space-20">
+                <div class="col-md-8">
+                    <div class="tab-content p-0">
+                        <div class="tab-pane active show" id="profile-business">
+                            <div class="m-b-10"><b>Businesses ({{businesses.count}})</b></div>
+                            <div class="row row-space-2">
+                                {for business in businesses}
+                                <div class="col-sm-8">
+                                    <div>
+                                        {{business.name}}
+                                    </div>
+                                    <div>
+                                        {{business.phone}}
+                                    </div>
+                                    <div>
+                                        {{business.email}}
+                                    </div>
+                                    <div>
+                                        <p> {{business.user.username}} </p>
+                                        <p> {{business.neighborhood.name}} </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- button to add business -->
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-lg m-3" data-bs-toggle="modal"
+                                    data-bs-target="#addBusiness">
+                                    <i class="fa fa-plus text-white"></i> Add Business
+                                </button>
+                                <!-- modal -->
+                                <div class="modal fade" id="addBusiness" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Add Business</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{% url 'create_business' %}" method="post"
+                                                    enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <div class="form-group mb-3">
+                                                        <label for="title">Business Name</label>
+                                                        <input type="text" class="form-control" value="" name="name"
+                                                            required>
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <label for="title">Business Email</label>
+                                                        <input type="email" class="form-control" value="" name="email"
+                                                            required>
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <label for="title">Business Phone</label>
+                                                        <input type="phone" class="form-control" value="" name="phone"
+                                                            required>
+                                                    </div>
+                                                    <div class="form-group mt-3">
+                                                        <label for="exampleFormControlTextarea1">Description</label>
+                                                        <textarea class="form-control" id="exampleFormControlTextarea1"
+                                                            rows="5" name="description"></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn">Add</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-container">
+            <div class="row row-space-20">
+                <div class="col-md-8">
+                    <div class="tab-content p-0">
+                        <div class="tab-pane active show" id="profile-contacts">
+                            <div class="m-b-10"><b>Contacts ({{contacts.count}})</b></div>
+                            <div class="row row-space-2">
+                                {for contact in contacts}
+                                <div class="col-sm-8">
+                                    <div>
+                                        {{contact.name}}
+                                    </div>
+                                    <div>
+                                        {{contact.email}}
+                                    </div>
+                                    <div>
+                                        {{contact.phone}}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- button to add contacts -->
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-lg m-3" data-bs-toggle="modal"
+                                    data-bs-target="#addContact">
+                                    <i class="fa fa-plus text-white"></i> Add Contact
+                                </button>
+                                <!-- modal -->
+                                <div class="modal fade" id="addContact" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Add Contact</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{% url 'create_contact' %}" method="post"
+                                                    enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <div class="form-group mb-3">
+                                                        <label for="title">Name</label>
+                                                        <input type="text" class="form-control" value="" name="name"
+                                                            required>
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <label for="title">Phone</label>
+                                                        <input type="number" class="form-control" value="" name="phone"
+                                                            required>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn">Add</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
