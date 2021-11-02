@@ -106,8 +106,8 @@
                         <div class="tab-pane active show" id="profile-posts">
                             <div class="d-flex justify-content-around ">
                                 <button type="button" class="btn btn-primary text-white m-3" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                <i class="fa fa-plus text-white"></i> New Post
+                                    data-bs-target="#exampleModal">
+                                    <i class="fa fa-plus text-white"></i> New Post
                                 </button>
                                 <button type="button" class="btn btn-primary text-white m-3" data-bs-toggle="modal"
                                     data-bs-target="#addBusiness">
@@ -120,7 +120,7 @@
 
                             </div>
                             <div class="m-b-10"><b>Posts ({{posts.count}})</b>
-                                </div>
+                            </div>
                             <div class="row row-space-2">
                                 {%for post in posts%}
                                 <div class="col-sm-12  col-md-6 col-lg-6">
@@ -196,129 +196,131 @@
                                     <div class="card">
                                         <h5 class="card-header">{{business.neighborhood.name}} </h5>
                                         <div class="card-body">
-                                          <h5 class="card-title">{{business.name}}</h5>
-                                          <p class="card-text">{{business.description}}</p>
-                                          <p class="card-text">Phone: {{business.phone}}</p>
-                                          <a href="mailto {{business.email}}" class="btn btn-outline-primary ">{{business.email}}</a>
+                                            <h5 class="card-title">{{business.name}}</h5>
+                                            <p class="card-text">{{business.description }}</p>
+                                            <p class="card-text">Phone: {{business.phone}}</p>
+                                            <a href="mailto {{business.email}}"
+                                                class="btn btn-outline-primary ">{{business.email}}</a>
                                         </div>
-                                      </div>
-                                {%endfor%}
-                            </div>
-                            <!-- button to add business -->
-                            <div class="col-md-12">
-                                
-                                <!-- modal -->
-                                <div class="modal fade" id="addBusiness" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Add Business</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="{% url 'create_business' %}" method="post"
-                                                    enctype="multipart/form-data">
-                                                    {% csrf_token %}
-                                                    <div class="form-group mb-3">
-                                                        <label for="title">Business Name</label>
-                                                        <input type="text" class="form-control" value="" name="name"
-                                                            required>
-                                                    </div>
-                                                    <div class="form-group mb-3">
-                                                        <label for="title">Business Email</label>
-                                                        <input type="email" class="form-control" value="" name="email"
-                                                            required>
-                                                    </div>
-                                                    <div class="form-group mb-3">
-                                                        <label for="title">Business Phone</label>
-                                                        <input type="phone" class="form-control" value="" name="phone"
-                                                            required>
-                                                    </div>
-                                                    <div class="form-group mt-3">
-                                                        <label for="exampleFormControlTextarea1">Description</label>
-                                                        <textarea class="form-control" id="exampleFormControlTextarea1"
-                                                            rows="5" name="description"></textarea>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="submit" class="btn">Add</button>
-                                                </form>
+                                    </div>
+                                    {%endfor%}
+                                </div>
+                                <!-- button to add business -->
+                                <div class="col-md-12">
+
+                                    <!-- modal -->
+                                    <div class="modal fade" id="addBusiness" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Add Business</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{% url 'create_business' %}" method="post"
+                                                        enctype="multipart/form-data">
+                                                        {% csrf_token %}
+                                                        <div class="form-group mb-3">
+                                                            <label for="title">Business Name</label>
+                                                            <input type="text" class="form-control" value="" name="name"
+                                                                required>
+                                                        </div>
+                                                        <div class="form-group mb-3">
+                                                            <label for="title">Business Email</label>
+                                                            <input type="email" class="form-control" value=""
+                                                                name="email" required>
+                                                        </div>
+                                                        <div class="form-group mb-3">
+                                                            <label for="title">Business Phone</label>
+                                                            <input type="phone" class="form-control" value=""
+                                                                name="phone" required>
+                                                        </div>
+                                                        <div class="form-group mt-3">
+                                                            <label for="exampleFormControlTextarea1">Description</label>
+                                                            <textarea class="form-control"
+                                                                id="exampleFormControlTextarea1" rows="5"
+                                                                name=""></textarea>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn">Add</button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="profile-container">
-            <div class="row row-space-20">
-                <div class="col-md-8">
-                    <div class="tab-content p-0">
-                        <div class="tab-pane active show" id="profile-contacts">
-                            <div class="m-b-10"><b>Contacts ({{contacts.count}})</b></div>
-                            <div class="row row-space-2">
-                                {%for contact in contacts%}
-                                <div class="col-sm-8">
-                                    <div>
-                                        {{contact.name}}
+            <div class="profile-container">
+                <div class="row row-space-20">
+                    <div class="col-md-8">
+                        <div class="tab-content p-0">
+                            <div class="tab-pane active show" id="profile-contacts">
+                                <div class="m-b-10"><b>Contacts ({{contacts.count}})</b></div>
+                                <div class="row row-space-2">
+                                    {%for contact in contacts%}
+                                    <div class="col-sm-8">
+                                        <div>
+                                            {{contact.name}}
+                                        </div>
+                                        <div>
+                                            {{contact.email}}
+                                        </div>
+                                        <div>
+                                            {{contact.phone}}
+                                        </div>
                                     </div>
-                                    <div>
-                                        {{contact.email}}
-                                    </div>
-                                    <div>
-                                        {{contact.phone}}
-                                    </div>
+                                    {%endfor%}
                                 </div>
-                                {%endfor%}
-                            </div>
-                            <!-- button to add contacts -->
-                            <div class="col-md-12">
-                                
-                                <!-- modal -->
-                                <div class="modal fade" id="addContact" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Add Contact</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="{% url 'create_contact' %}" method="post"
-                                                    enctype="multipart/form-data">
-                                                    {% csrf_token %}
-                                                    <div class="form-group mb-3">
-                                                        <label for="title">Name</label>
-                                                        <input type="text" class="form-control" value="" name="name"
-                                                            required>
-                                                    </div>
-                                                    <div class="form-group mb-3">
-                                                        <label for="title">Phone</label>
-                                                        <input type="number" class="form-control" value="" name="phone"
-                                                            required>
-                                                    </div>
+                                <!-- button to add contacts -->
+                                <div class="col-md-12">
 
-                                                    <div class="modal-footer">
-                                                        <button type="submit" class="btn">Add</button>
-                                                </form>
+                                    <!-- modal -->
+                                    <div class="modal fade" id="addContact" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Add Contact</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{% url 'create_contact' %}" method="post"
+                                                        enctype="multipart/form-data">
+                                                        {% csrf_token %}
+                                                        <div class="form-group mb-3">
+                                                            <label for="title">Name</label>
+                                                            <input type="text" class="form-control" value="" name="name"
+                                                                required>
+                                                        </div>
+                                                        <div class="form-group mb-3">
+                                                            <label for="title">Phone</label>
+                                                            <input type="number" class="form-control" value=""
+                                                                name="phone" required>
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn">Add</button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-{%endblock%}
+    {%endblock%}
