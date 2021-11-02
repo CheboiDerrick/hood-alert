@@ -4,16 +4,17 @@ from django.conf.urls.static import static
 from mainapp import views
 
 
-
-
 urlpatterns = [
-    path('',views.home,name='home'),
+    path('', views.home, name='home'),
     path("profile/", views.profile, name="profile"),
     path("profile/update/", views.update_profile, name="update_profile"),
-    path("post/save/", views.create_post, name="save_post"), 
+    path("post/save/", views.create_post, name="save_post"),
     path("business/create/", views.create_business, name="create_business"),
     path("contact/create/", views.create_contact, name="create_contact"),
-    
+    path("posts/", views.posts, name="posts"),
+    path("business/", views.business, name="business"),
+    path("contacts/", views.contacts, name="contacts"),
+    path("search/", views.search, name="search"),
 ]
 
 if settings.DEBUG:

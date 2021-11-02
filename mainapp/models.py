@@ -56,6 +56,9 @@ class Profile(models.Model):
     neighborhood = models.OneToOneField(Neighborhood, on_delete=models.CASCADE)
     email = models.EmailField(unique=True)
 
+    def save_profile(self):
+        self.save()
+
     def __str__(self):
         return self.name
 
@@ -66,7 +69,7 @@ class Business(models.Model):
     '''
 
     name = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     neighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
     email = models.EmailField(unique=True, null=True, blank=True )
@@ -106,7 +109,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='posts/', blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     neighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
-    posted_on = models.DateTimeField()
+    posted_on = models.DateTimeField(auto_now_add=True)
 
 
     class Meta:
