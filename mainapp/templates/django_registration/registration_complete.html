@@ -1,6 +1,10 @@
-{%load static%}
-<div class="container d-flex flex-column justify-content-center align-items-center">
-        <img src="{% static 'icons/done.png'%}" alt="Completed icon">
+{%extends "django_registration/base.html"%} {% load django_bootstrap5 %} {%load static%}
+{% block content %}
+<div class="container complete d-flex flex-column justify-content-center align-items-center">
+        <div>
+                <img src="{% static 'icon/done.jpg'%}" class="img-fluid" width="100px" alt="Completed icon">
+        </div>
         <h1>Your Registration was Successful</h1>
-        <a href="{%url 'login'%}"><button type="button" class="btn btn-success">LOGIN</button></a>
+        <a href="{%url 'login'%}"><button type="button m-2 p-2" class="btn btn-lg btn-success">LOGIN</button></a>
 </div>
+{%endblock%}

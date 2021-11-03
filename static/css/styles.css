@@ -1,14 +1,31 @@
-nav{
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 0, rgba(0, 0, 0, 0.85) 100%);
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap");
+
+* {
+  font-family: "Roboto", sans-serif;
 }
 
-nav  a {
-    color: #fff;
-    text-decoration: none
+nav {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.25) 0,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
 }
 
 .nav-item a {
-    color: #fff;
-    text-decoration: none
-    }
+  color: #fff;
+  text-decoration: none;
+}
 
+i {
+  color: #ffff;
+}
+
+.complete {
+  height: 100vh;
+}
