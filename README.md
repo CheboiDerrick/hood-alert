@@ -46,7 +46,8 @@ A user should be able to:
 * Python -(3.8)
 * Django
 
-
+## Bugs
+Currently there are no known bugs, but feel free to contact me on derrickchb@gmail.com
 ## License
 [MIT](https://github.com/CheboiDerrick/hood-alert/blob/main/LICENCE) 
 

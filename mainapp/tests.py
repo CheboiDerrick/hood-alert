@@ -27,6 +27,8 @@ class BusinessTestClass(TestCase):
         self.business.delete_business()
         business = Business.objects.all()
         self.assertTrue(len(business) == 0)
+
+        
 class NeighbourhoodTestClass(TestCase):
     def setUp(self):
         self.admin = User.objects.create_superuser(
